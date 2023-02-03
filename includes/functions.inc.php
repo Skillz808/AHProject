@@ -96,17 +96,6 @@ function emptyInputLogin($username, $pwd) {
     return $result;
 }
 
-function emptyInputProfile($currentpwd, $newpwd, $newemail) {
-    $result;
-    if (empty($currentpwd) || (empty($newpwd) || empty($newemail))) {
-        $result = true;
-    }
-    else {
-        $result = false;
-    }
-    return $result;
-}
-
 function loginUser($conn, $username, $pwd){
     $uidExists = uidExists($conn, $username, $username);
 
@@ -130,60 +119,4 @@ function loginUser($conn, $username, $pwd){
         exit();
     }
 }
-
-function updateUser($conn, $currentEmail, $currentpwd, $newpwd, $newemail){ //this is going to be horrible
-    $uidExists = uidExists($conn, $currentEmail, $currentEmail);
-
-    if ($uidExists === false) {
-        header("location: ../profile.php?error=incorrectlogin");
-        exit();
-    }
-
-    $pwdHashed = $uidExists["usersPwd"];
-    $checkPwd = password_verify($currentpwd, $pwdHashed);
-
-    if ($checkPwd === false){
-        header("location: ../profile.php?error=incorrectpwd");
-        exit();
-    }
-    else if ($checkPwd === true){
-            if (empty($newemail) == true) {
-                $sql = "UPDATE users (usersPwd) VALUES (?);";
-            }
-            else if (empty($newpwd) == true){
-                $sql = "UPDATE users (usersEmail) VALUES (?);";
-            }
-            else {
-                $sql = "UPDATE users (usersEmail, usersPwd) VALUES (?,?);";
-            }
-            
-            $stmt = mysqli_stmt_init($conn);
-            if (!mysqli_stmt_prepare($stmt, $sql)) {
-                header("location: ../signup.php?error=stmtfailed");
-                exit();
-            }
-        
-            $hashedPwd = password_hash($newpwd, PASSWORD_DEFAULT); #hehe you still cant hack me
-        
-            if (empty($newemail) == true) {
-                mysqli_stmt_bind_param($stmt, "s", $hashedPwd);
-            }
-            else if (empty($newpwd) == true){
-                mysqli_stmt_bind_param($stmt, "s", $newemail);
-            }
-            else {
-                mysqli_stmt_bind_param($stmt, "ss", $newemail, $hashedPwd);
-            }
-
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-            
-            session_start();
-            session_unset();
-            session_destroy();
-            
-            header("location: ../index.php");
-            exit();
-        }
-    }
 ?>
