@@ -14,10 +14,15 @@ html, body {
   }
 
 .header{
+    position: fixed;
     width: 100%;
     height: 80px;
     display: block;
     background-color: #101010;
+}
+
+.wrapper{
+    padding-top: 80px;
 }
 
 .logoIMG {
@@ -134,7 +139,6 @@ html, body {
 #header .hamburger.active .bar::after{
     top: 0;
 }
-/* End of Header Section */
 
 .logo_container{
     height:100%;
@@ -168,6 +172,18 @@ html, body {
     color: white;
     font-size: 16px;
 }
+/* End of Header Section */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+  }
+  .grid-item {
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
 
 .signup-form {
     margin-bottom: 10px;

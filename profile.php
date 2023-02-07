@@ -1,3 +1,5 @@
+<title>Baking Bad | Profile</title>
+
 <?php
     include_once 'header.php';
 ?>
@@ -11,8 +13,6 @@
     }
 ?>
     <form action="includes/profile.inc.php" method="post"><br>
-        <label for="email">Current Email:</label>
-        <input type="text" name="email" placeholder="Enter Current Email..."><br>
         <label for="currentpassword">Current Password:</label>
         <input type="password" name="currentpwd" placeholder="Enter Current Password..."><br>
         <label for="newemail">New Email:</label>

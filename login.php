@@ -1,3 +1,5 @@
+<title>Baking Bad | Login</title>
+
 <?php
     include_once 'header.php';
 ?>
