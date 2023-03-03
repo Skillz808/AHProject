@@ -1,4 +1,4 @@
-<title>Baking Bad | Home</title>
+<title>Baking Bad | Product</title>
 
 <?php
     include_once 'header.php';
@@ -9,15 +9,8 @@
         echo "<h1>Welcome " . $_SESSION["useruid"] . "</h1>";
     }
 ?>
-<div class="grid-container">
-<?php
-for ($x = 0; $x <= 11; $x++) {
-  echo "<a href='product.php?='$x'>Product '$x'<a>";
-}
-?>
-</div>
+
 
 <?php
     include_once 'footer.php';
 ?>
-

@@ -120,4 +120,16 @@ function loginUser($conn, $username, $pwd){
         exit();
     }
 }
+
+function executeQuery($conn, $query){
+    $stmt = $query;
+    $result = mysqli_query($conn, $stmt);
+    if($result) { 
+        return $result;
+        exit(); 
+      } else {
+        header("location: ../adminpanel.php?error=stmtfailed");
+        exit();
+      }
+    }
 ?>
