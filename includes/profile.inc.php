@@ -2,22 +2,12 @@
 
 if (isset($_POST["submit"])){
 
-    $currentEmail = $_POST["email"];
-    $currentpwd = $_POST["currentpwd"];
     $newemail = $_POST["newemail"];
     $newpwd = $_POST["newpwd"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
-
-    if (emptyInputProfile($currentEmail, $currentpwd, $newpwd, $newemail) !== false) {
-        header("location: ../profile.php?error=emptyinput");
-        exit();
-    }    
-    if (invalidEmail($currentEmail) !== false) {
-        header("location: ../profile.php?error=invalidemail");
-        exit();
-    }  
+ 
     if (invalidEmail($newemail) !== false) {
         header("location: ../profile.php?error=invalidemail");
         exit();
@@ -27,8 +17,22 @@ if (isset($_POST["submit"])){
         exit();
     } 
 
-    updateUser($conn, $currentEmail, $currentpwd, $newemail, $newpwd);
+    session_start();
 
+    if (!empty($newpwd)) {
+        updateUserPwd($conn, $newpwd);
+    }
+    else if (!empty($newemail)) {
+        updateUserEmail($conn, $newemail);
+    }
+    else{
+        updateUserPwd($conn, $newpwd);
+        updateUserEmail($conn, $newemail);
+    }
+
+    session_unset();
+    session_destroy();
+    header("location: ../index.php");
 }   
 else {
     header("location: ../profile.php");

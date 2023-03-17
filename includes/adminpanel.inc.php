@@ -11,7 +11,7 @@ if (isset($_POST["submit"])){
 
     $result = executeQuery($conn, $query);
 
-    if ($result->num_rows > 0) { //I hate this a lot like a whole lot a
+    if ($result->num_rows > 0) {
         // output data of each row
         while($row = $result->fetch_assoc()) {
           echo "id: " . $row["usersId"]. " - Name: " . $row["usersUid"]. " - Email: " . $row["usersEmail"]. " - Password(Hashed): " . $row["usersPwd"]. " - IsAdmin?: " . $row["isAdmin"]. "<br>";

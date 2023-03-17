@@ -96,6 +96,17 @@ function emptyInputLogin($username, $pwd) {
     return $result;
 }
 
+function emptyInputReview($name, $description, $rating) {
+    $result;
+    if (empty($name) || empty($description || empty($rating))) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
 function loginUser($conn, $username, $pwd){
     $uidExists = uidExists($conn, $username, $username);
 
@@ -121,6 +132,58 @@ function loginUser($conn, $username, $pwd){
     }
 }
 
+function updateUserPwd($conn, $newpwd) {
+    $id = $_SESSION["userid"];
+    $stmt = $conn->prepare("UPDATE users SET usersPwd = ? WHERE usersId = ?");
+    if (!$stmt) {
+        echo "Error in preparing the SQL query: " . $conn->error;
+        return;
+    }
+    $hashedPwd = password_hash($newpwd, PASSWORD_DEFAULT);
+    $result = $stmt->bind_param("si", $hashedPwd, $id);
+    if (!$result) {
+        echo "Error in binding the SQL parameters: " . $stmt->error;
+        return;
+    }
+    $result = $stmt->execute();
+    if (!$result) {
+        echo "Error in executing the SQL query: " . $stmt->error;
+        return;
+    }
+}
+
+function updateUserEmail($conn, $newemail) {
+    session_start();
+    $id = $_SESSION["userid"];
+    $stmt = $conn->prepare("UPDATE users SET usersEmail = ? WHERE usersId = ?");
+    if (!$stmt) {
+        echo "Error in preparing the SQL query: " . $conn->error;
+        return;
+    }
+    $stmt->bind_param("si", $newemail, $id);
+    $result = $stmt->execute();
+    if (!$result) {
+        echo "Error in executing the SQL query: " . $stmt->error;
+        return;
+    }
+    echo "Number of rows affected: " . $stmt->affected_rows . "<br>";
+}
+
+function getProductInfo($conn, $productId) {
+    $stmt = $conn->prepare("SELECT productName, productDescription, productPrice FROM product WHERE productId = ?");
+    $stmt->bind_param("i", $productId);
+    $stmt->execute();
+
+    $stmt->bind_result($productName, $productDescription, $productPrice);
+    $stmt->fetch();
+
+    return array(
+        'name' => $productName,
+        'description' => $productDescription,
+        'price' => $productPrice
+    );
+}
+
 function executeQuery($conn, $query){
     $stmt = $query;
     $result = mysqli_query($conn, $stmt);
@@ -132,4 +195,43 @@ function executeQuery($conn, $query){
         exit();
       }
     }
+
+function countItems($conn, $table){
+    $stmt = $conn->prepare("SELECT COUNT(1) FROM $table");
+    $stmt->execute();
+
+    $stmt->bind_result($count);
+    $stmt->fetch();
+
+    return $count;
+}
+
+function countItemsSearch($conn, $search){
+    $search = "%$search%";
+    $stmt = $conn->prepare("SELECT COUNT(1) FROM product WHERE productName LIKE ?");
+    $stmt->bind_param("s", $search);
+    $stmt->execute();
+
+    $stmt->bind_result($count);
+    $stmt->fetch();
+
+    return $count;
+}
+
+function getProductInfoSearch($conn, $search, $offset) {
+    $search = "%$search%";
+    $stmt = $conn->prepare("SELECT productId, productName, productDescription, productPrice FROM product WHERE productName LIKE ? LIMIT 1 OFFSET ?");
+    $stmt->bind_param("si", $search, $offset);
+    $stmt->execute();
+
+    $stmt->bind_result($id, $productName, $productDescription, $productPrice);
+    $stmt->fetch();
+
+    return array(
+        'id' => $id,
+        'name' => $productName,
+        'description' => $productDescription,
+        'price' => $productPrice
+    );
+}
 ?>

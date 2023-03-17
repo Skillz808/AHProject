@@ -13,8 +13,6 @@
     }
 ?>
     <form action="includes/profile.inc.php" method="post"><br>
-        <label for="currentpassword">Current Password:</label>
-        <input type="password" name="currentpwd" placeholder="Enter Current Password..."><br>
         <label for="newemail">New Email:</label>
         <input type="text" name="newemail" placeholder="Enter New Email..."><br>
         <label for="newpassword">New Password:</label>

@@ -35,7 +35,6 @@ html, body {
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    max-width: 1300;
     padding: 0 10px;
 }
 #header .nav-list ul{
@@ -174,6 +173,8 @@ html, body {
 }
 /* End of Header Section */
 
+/* index.php */
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
@@ -185,6 +186,26 @@ html, body {
     font-size: 30px;
     text-align: center;
   }
+
+/* All Forms */
+
+.search-form {
+    margin: auto;
+    width: 20%;
+    padding: 10px;
+}
+
+.search-form .search-container {
+    float: right;
+  }
+  
+.search-form input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: solid;
+}
+  
 
 .signup-form {
     margin-bottom: 10px;
@@ -243,8 +264,28 @@ html, body {
     width: 90px;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 962px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 10px;
+        width: 100%;
+      }
+}
 
+@media (max-width: 600px){
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto;
+        padding: 10px;
+        width: 100%;
+      }
+
+}
+
+
+
+@media (max-width: 550px) {
     .signup-form {
         margin-bottom: 10px;
     }
@@ -303,4 +344,45 @@ html, body {
     }
 }
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    margin-bottom: 40px;
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .nowrap {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  .productImage {
+    padding-left: 100px;
+    padding-top: 60px;
+  }
   
