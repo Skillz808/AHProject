@@ -32,14 +32,14 @@
                     <ul>
                     <li><a href ="index.php" data-after="Home">Home</a></li>
                 <?php
-                    if (isset($_SESSION["useruid"])){
-                        if ($_SESSION["admin"] == true){
+                    if (isset($_SESSION["useruid"])){ //if the user is logged in, display the profile and logout buttons
+                        if ($_SESSION["admin"] == true){ //if the user is an admin, display the admin panel button
                             echo "<li><a href='adminpanel.php' data-after='Admin'>Admin</a></li>";
                         }
                         echo "<li><a href='profile.php' data-after='Profile'>Profile</a></li>";
                         echo "<li><a href='./includes/logout.inc.php' data-after='Logout'>Logout</a></li>";
                     }
-                    else{
+                    else{ //if the user is not logged in, display the signup and login buttons
                         echo "<li><a href ='signup.php' data-after='Signup'>Signup</a></li>";
                         echo "<li><a href ='login.php' data-after='Login'>Login</a></li>";
                     }

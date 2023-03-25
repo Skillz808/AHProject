@@ -15,7 +15,7 @@
     
 <div class="grid-container">
 <?php
-if(empty($_GET['search'])){
+if(empty($_GET['search'])){ //if the user is not searching for anything, display all products
   for ($x = 1; $x <= countItems($conn, "product"); $x++) {
     $productInfo = getProductInfo($conn, $x);
     $image = "$x.png";
@@ -28,7 +28,7 @@ if(empty($_GET['search'])){
   </div> ";
   }
 }
-else{
+else{ //if the user is searching for something, display the results of the search
   $count = countItemsSearch($conn, $_GET['search']);
   for ($x = 0; $x < $count; $x++) {
       $productInfo = getProductInfoSearch($conn, $_GET['search'], $x);

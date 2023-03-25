@@ -19,15 +19,15 @@ if (isset($_POST["submit"])){
 
     session_start();
 
-    if (!empty($newpwd)) {
+    if (!empty($newemail) && !empty($newpwd)) { //update both email and password if both are not empty
+        updateUserEmail($conn, $newemail);
         updateUserPwd($conn, $newpwd);
     }
-    else if (!empty($newemail)) {
+    else if (!empty($newemail)) { //update only email if it is not empty
         updateUserEmail($conn, $newemail);
     }
-    else{
+    else if (!empty($newpwd)) { //update only password if it is not empty
         updateUserPwd($conn, $newpwd);
-        updateUserEmail($conn, $newemail);
     }
 
     session_unset();

@@ -6,10 +6,14 @@
 
 
 
-<section class="signup-form">
+<section class="generic-form">
 <?php
-    if (isset($_SESSION["useruid"])){
+    if (isset($_SESSION["useruid"])){ //display the user's username in the header
         echo "<h2>" . $_SESSION["useruid"] . "'s Profile Page</h2>";
+    }
+    if (empty($_SESSION["useruid"])){ //redirect the user to the login page if they are not logged in
+        header("Location: index.php");
+        exit();
     }
 ?>
     <form action="includes/profile.inc.php" method="post"><br>
@@ -22,14 +26,14 @@
 </section>
 
 <?php
-    if (isset($_GET["error"])){
+    if (isset($_GET["error"])){ //display an error message if there is an empty field in the user input
         if($_GET["error"] == "emptyinput"){
             echo "<p>Please fill in all fields</p>";
         }
-        else if($_GET["error"] == "incorrectpwd"){
+        else if($_GET["error"] == "incorrectpwd"){ //display an error message if the password does not match the account the user is attempting to log in to
             echo "<p>This password is incorrect.</p>";
         }
-        else if($_GET["error"] == "invalidemail"){
+        else if($_GET["error"] == "invalidemail"){ //display an error message if the email is invalid
             echo "<p>This email is invalid.</p>";
         }
         }
